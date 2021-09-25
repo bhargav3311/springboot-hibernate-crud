@@ -47,6 +47,9 @@ public class EmployeeController {
 		//fetch emp details from DB
 		Employee employee = employeeRepository.findById(employeeId)
 				.orElseThrow(() -> new ResourceNotFoundException("Employee not found for this ID>> " + employeeId));
+		
+		LOGGER.info("get EmployeeID>>" + employeeId);
+		
 		return ResponseEntity.ok().body(employee);
 	}
 
@@ -81,12 +84,14 @@ public class EmployeeController {
 	public Map<String, Boolean> deleteEmployee(@PathVariable (value = "id") Long employeeId) throws ResourceNotFoundException{
 		Employee employee = employeeRepository.findById(employeeId)
 				.orElseThrow(() -> new ResourceNotFoundException("Employee Not Found for this ID>>" + employeeId));
-		
+
 		this.employeeRepository.delete(employee);
 		
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("delete", Boolean.TRUE);  //employee deleted
 		
+		LOGGER.info(" Deleted EmployeeID>>" + employeeId);
+
 		return response;
 	}
 		
